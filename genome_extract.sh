@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir Genomes
+
 while read line;
         do
 
@@ -9,7 +11,7 @@ while read line;
                 ref=$(echo $line | awk '{print $1}')
                 ids=$(echo $line | awk '{print $2}')
 
-                cp $ref/ncbi_dataset/data/$ref/*.fna tmp/$ids
+                cp $ref/ncbi_dataset/data/$ref/*.fna Genomes/$ids
         fi
 
 done < $1
