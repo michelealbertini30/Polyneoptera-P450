@@ -5,7 +5,7 @@ sample = glob_wildcards('Genomes/{sample}.fna')[0]
 
 
 rule all:
-	input: expand('agat_cds/{sample}.cds.fna', sample = sample)
+	input: expand('agat_cds2/{sample}.cds.fna', sample = sample)
 
 
 rule miniprot:
@@ -40,7 +40,7 @@ rule miniprot2:
 	shell:
 		'miniprot -t{miniprot_cores} --gff {input.genomes} {input.agat_fasta} > {output}'
 
-rule agat_sec_iter:
+rule agat2:
 	input:
 		genomes = 'Genomes/{sample}.fna',
 		miniprot2=rules.miniprot2.output
