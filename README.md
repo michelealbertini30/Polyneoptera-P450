@@ -2,7 +2,7 @@
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/P450cycle.svg/750px-P450cycle.svg.png)
 
-<div style="background-color: #ff; padding: 10px; border-radius: 8px;">
+<div style="background-color: #00FF00; padding: 10px; border-radius: 8px;">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/P450cycle.svg/750px-P450cycle.svg.png" alt="Your Image" style="width: 100%; border-radius: 8px;">
 </div>
 
