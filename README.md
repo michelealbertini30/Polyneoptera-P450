@@ -38,10 +38,10 @@ while read line;
                 ref=$(echo $line | awk '{print $1}')
                 ids=$(echo $line | awk '{print $2}')
 
-                datasets download genome accession $rf --include genome    --dehydrated --filename $rf.zip
+                datasets download genome accession $rf --include genome --dehydrated --filename $rf.zip
 
                 unzip $rf -d $rf
-		        datasets rehydrate --directory $rf
+		datasets rehydrate --directory $rf
 
                 cp $ref/ncbi_dataset/data/$ref/*.fna Genomes/$ids.fna
         fi
@@ -49,15 +49,18 @@ while read line;
 done < refseq_genomes.tsv
 ```
 \
-Next, a [protein database](https://github.com/michelealbertini30/Polyneoptera-P450/blob/main/UniProt_P450_RInsecta.fasta) was created on [UniProt](https://www.uniprot.org/) with all the annotated and reviewed P450 in the Insect class. 
+Next, a [protein database](https://github.com/michelealbertini30/Polyneoptera-P450/blob/main/UniProt_P450_RInsecta.fasta) was created on [UniProt](https://www.uniprot.org/) with all the annotated and reviewed P450 in the Insect class.
 
 ## <a name="tools"></a> Bioinformatic tools
-Here is the complete list of all major softwares used during this project:
+Here is a complete list of all major softwares used during this project:
 * [Miniprot](https://github.com/lh3/miniprot)\
 Miniprot aligns a protein sequence against a genome with affine gap penalty, splicing and frameshift. It is primarily intended for annotating protein-coding genes in a new species using known genes from other species.
 
 * [Agat](https://github.com/NBISweden/AGAT)\
 **A**nother **G**tf/**G**ff **A**nalysis **T**oolkit: Suite of tools to handle gene annotation in any GTF/GFF format.
+
+* [GeneRax](https://github.com/BenoitMorel/GeneRax)\
+Parallel tool for species tree-aware maximum likelihood based gene family tree inference under gene duplication, transfer and loss.
 
 \
 Throught the entire project we chose to use [Snakemake](https://snakemake.github.io/) as primary scripting method in order to make the code more efficient when running computationally heavy analysis and ensuring an easy way to introduce new genome or protein samples without having to re-run the entire analysis.
