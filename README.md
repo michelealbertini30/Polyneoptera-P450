@@ -3,7 +3,7 @@
 This project aims to study the evolution of Cytochome P450 (or CYPs) in Polyneopterans with particular focus on gene destiny after a duplication.
 
 
-<div style="background-color: #f2f2f2; padding: 10px; border: 3px solid #333; border-radius: 1px;">
+<div style="background-color: #f2f2f2; padding: 10px; border: 3px solid #ddd; border-radius: 2px;">
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/P450cycle.svg/750px-P450cycle.svg.png)
 
