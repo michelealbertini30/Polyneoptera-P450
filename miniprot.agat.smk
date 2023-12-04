@@ -22,7 +22,7 @@ rule miniprot:
 rule agat:
         input:
                 genomes = 'Genomes/{sample}.fna',
-                miniprot=rules.miniprot.output
+                miniprot = rules.miniprot.output
         output:
                 'agat_cds/{sample}.cds.fna'
         shell:
@@ -32,7 +32,7 @@ rule agat:
 rule miniprot2:
 	input:
 		genomes = 'Genomes/{sample}.fna',
-		agat_fasta=rules.agat.output
+		agat_fasta = rules.agat.output
 	threads:
 		config['Run']['Threads']
 	output:
@@ -43,7 +43,7 @@ rule miniprot2:
 rule agat2:
 	input:
 		genomes = 'Genomes/{sample}.fna',
-		miniprot2=rules.miniprot2.output
+		miniprot2 = rules.miniprot2.output
 	output:
 		'agat_cds2/{sample}.cds.fna'
 	shell:
