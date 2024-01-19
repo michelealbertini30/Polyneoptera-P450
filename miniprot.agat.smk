@@ -69,6 +69,6 @@ rule augustus_extract:
 		codingseq = 'augustus/{sample}.augustus.codingseq'
 	shell:
 		'''
-		perl scripts/getAnnoFasta.pl {input.augustus_hits} | tee {output.aa}
-		perl scripts/getAnnoFasta.pl {input.augustus_hits} | tee {output.codingseq}
+		perl Scripts/getAnnoFasta.pl {input.augustus_hits} | tee {output.aa}
+		perl Scripts/getAnnoFasta.pl {input.augustus_hits} | tee {output.codingseq}
 		'''

@@ -1,3 +1,4 @@
 Run:
   Miniprot_cores: 20
   Threads: 6
+  Agat_expansion: 16000
