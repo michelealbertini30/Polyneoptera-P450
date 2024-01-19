@@ -1,11 +1,12 @@
-configfile: 'config.yaml'
+configfile: 'config.smk.yaml'
 miniprot_cores=config['Run']['Miniprot_cores']
+agat_exp=config['Run']['Agat_expansion']
 
 sample = glob_wildcards('Genomes/{sample}.fna')[0]
 
 
 rule all:
-        input: expand('augustus/{sample}.augustus.gff', sample = sample), 'augustus_statistics.log'
+        input: expand('augustus/{sample}.augustus.gff', sample = sample), 'augustus_statistics.log', expand('augustus/{sample}.augustus.aa', sample = sample), expand('augustus/{sample}.augustus.codingseq', sample = sample)
 
 
 rule miniprot:
@@ -26,7 +27,7 @@ rule agat:
         output:
                 'agat_cds/{sample}.cds.fna'
         shell:
-                'agat_sp_extract_sequences.pl --gff {input.miniprot} --fasta {input.genomes} -t cds --up 16000 --down 16000 -o {output}'
+                'agat_sp_extract_sequences.pl --gff {input.miniprot} --fasta {input.genomes} -t cds --up {agat_exp} --down {agat_exp} -o {output}'
 
 
 rule augustus:
@@ -58,4 +59,16 @@ rule augustus_statistics:
 			fi
 		done
 
+		'''
+
+rule augustus_extract:
+	input:
+		augustus_hits = rules.augustus.output
+	output:
+		aa = 'augustus/{sample}.augustus.aa',
+		codingseq = 'augustus/{sample}.augustus.codingseq'
+	shell:
+		'''
+		perl scripts/getAnnoFasta.pl {input.augustus_hits} | tee {output.aa}
+		perl scripts/getAnnoFasta.pl {input.augustus_hits} | tee {output.codingseq}
 		'''
