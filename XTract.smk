@@ -101,7 +101,20 @@ rule augustus_extract:
 		perl {getAnnoFasta} {input.augustus_hits} | tee {output.codingseq}
 		'''
 
-rule augustus_combine:
+
+rule interproscan:
+	input:
+		augustus_aa = expand('augustus/{sample}.augustus.aa', sample = sample)
+	output:
+		interpro = 'interproscan/{sample}.tsv'
+	shell:
+		'../interproscan-5.65-97.0/interproscan.sh -i {input.augustus_aa} -f tsv -dp >> {output}'
+
+
+rule filter:
+
+
+rule reformat_combine:
 	input:
 		augustus_aa = expand('augustus/{sample}.augustus.aa', sample = sample)
 	output:
@@ -110,9 +123,10 @@ rule augustus_combine:
 		'''
 		for file in {input.augustus_aa}; do
 			if [ -e "$file" ]; then
-				filename=$(basename "$file" .augustus_aa)
+				filename=$(basename "$file" .augustus.aa)
 				
 				sed "s/t1/$filename/g" {input.augustus_aa} >> {output}
 			fi
 		done
 		'''
+
