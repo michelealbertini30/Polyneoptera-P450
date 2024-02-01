@@ -13,7 +13,8 @@ rule all:
 		'augustus_statistics.log',
 		expand('augustus/{sample}.augustus.aa', sample = sample),
 		expand('augustus/{sample}.augustus.codingseq', sample = sample),
-		'training/Merged.gb'
+		'training/Merged.gb',
+		'p450.combined.fa'		
 
 rule miniprot:
         input:
@@ -100,3 +101,18 @@ rule augustus_extract:
 		perl {getAnnoFasta} {input.augustus_hits} | tee {output.codingseq}
 		'''
 
+rule augustus_combine:
+	input:
+		augustus_aa = expand('augustus/{sample}.augustus.aa', sample = sample)
+	output:
+		'p450.combined.fa'
+	shell:
+		'''
+		for file in {input.augustus_aa}; do
+			if [ -e "$file" ]; then
+				filename=$(basename "$file" .augustus_aa)
+				
+				sed "s/t1/$filename/g" {input.augustus_aa} >> {output}
+			fi
+		done
+		'''
