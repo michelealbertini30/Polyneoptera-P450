@@ -9,11 +9,13 @@ sample = glob_wildcards('Genomes/{sample}.fna')[0]
 
 rule all:
 	input:
+		expand('miniprot_gff/{sample}.gff', sample = sample),
+		expand('agat_cds/{sample}.cds.fna', sample = sample),
 		expand('augustus/{sample}.augustus.gff', sample = sample),
 		expand('augustus/{sample}.augustus.aa', sample = sample),
 		expand('augustus/{sample}.augustus.codingseq', sample = sample),
 		expand('interproscan/{sample}.tsv', sample = sample),
-		expand('genes/{sample}.fa', sample = sample),
+		expand('Genes/{sample}.fa', sample = sample),
 		'augustus_statistics.log',
 		'training/Merged.gb',
 		'p450.combined.fa'		
@@ -40,24 +42,24 @@ rule agat_exp:
 
 ### AUGUSTUS TRAINING ###
 
-rule gff2gb:
-	input:
-		genome = 'Genomes/{sample}.fna',
-		miniprot = rules.miniprot.output
-	output:
-		'training/{sample}.gb'
-	shell:
-		'perl training/Scripts/gff2gbSmallDNA.pl {input.miniprot} {input.genome} 16000 {output}'
-
-rule gb_merge:
-	input:
-		gb = expand('training/{sample}.gb', sample = sample)
-	output:
-		'training/Merged.gb'
-	shell:
-		'cat {input.gb} > {output}'
-
-
+#rule gff2gb:
+#	input:
+#		genome = 'Genomes/{sample}.fna',
+#		miniprot = rules.miniprot.output
+#	output:
+#		'training/{sample}.gb'
+#	shell:
+#		'perl training/Scripts/gff2gbSmallDNA.pl {input.miniprot} {input.genome} 16000 {output}'
+#
+#rule gb_merge:
+#	input:
+#		gb = expand('training/{sample}.gb', sample = sample)
+#	output:
+#		'training/Merged.gb'
+#	shell:
+#		'cat {input.gb} > {output}'
+#
+#
 ##############################
 
 rule augustus:
@@ -109,7 +111,11 @@ rule interproscan:
 	output:
 		interpro = 'interproscan/{sample}.tsv'
 	shell:
-		'../interproscan-5.65-97.0/interproscan.sh -i {input.augustus_aa} -f tsv -dp >> {output}'
+		'''
+		for file in {input.augustus_aa}; do
+			../interproscan-5.65-97.0/interproscan.sh -i "$file" -f tsv -dp >  {output}
+		done
+		'''
 
 rule interpro_filter1:
 	input:
@@ -127,7 +133,7 @@ rule interpro_filter2:
 		augustus_aa = expand('augustus/{sample}.augustus.aa', sample = sample),
 		true_genes = 'true_p450.txt'
 	output:
-		final_genes = 'genes/{sample}.fa'
+		final_genes = 'Genes/{sample}.fa'
 	shell:
 		'''
 		while IFS= read -r gene_name; do
