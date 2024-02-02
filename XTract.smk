@@ -10,9 +10,11 @@ sample = glob_wildcards('Genomes/{sample}.fna')[0]
 rule all:
 	input:
 		expand('augustus/{sample}.augustus.gff', sample = sample),
-		'augustus_statistics.log',
 		expand('augustus/{sample}.augustus.aa', sample = sample),
 		expand('augustus/{sample}.augustus.codingseq', sample = sample),
+		expand('interproscan/{sample}.tsv', sample = sample),
+		expand('genes/{sample}.fa', sample = sample),
+		'augustus_statistics.log',
 		'training/Merged.gb',
 		'p450.combined.fa'		
 
@@ -73,7 +75,6 @@ rule augustus_statistics:
                 'augustus_statistics.log'
 	shell:
 		'''
-		
 		echo -e "File\t\tN.hits\t\tUnique" > {output}
 
 		for file in {input.augustus_hits}; do
@@ -110,8 +111,30 @@ rule interproscan:
 	shell:
 		'../interproscan-5.65-97.0/interproscan.sh -i {input.augustus_aa} -f tsv -dp >> {output}'
 
+rule interpro_filter1:
+	input:
+		interpro = expand('interproscan/{sample}.tsv', sample = sample)
+	output:
+		'true_p450.txt'
+	shell:
+		'''
+		result=$(awk '/P450/ {{print $1}}' {input.interpro} | sort -u)
+		echo -e "$result" >> {output}		
+		'''
 
-rule filter:
+rule interpro_filter2:
+	input:
+		augustus_aa = expand('augustus/{sample}.augustus.aa', sample = sample),
+		true_genes = 'true_p450.txt'
+	output:
+		final_genes = 'genes/{sample}.fa'
+	shell:
+		'''
+		while IFS= read -r gene_name; do
+			awk -v gene="$gene_name" '/^>/ {{if (p) printf ""; p=0}} $1 == ">" gene {{p=1; print}}' {input.augustus_aa} >> {output}
+		done < {input.true_genes}
+
+		'''
 
 
 rule reformat_combine:
