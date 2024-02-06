@@ -14,11 +14,11 @@ rule all:
 		expand('augustus/{sample}.augustus.gff', sample = sample),
 		expand('augustus/{sample}.augustus.aa', sample = sample),
 		expand('augustus/{sample}.augustus.codingseq', sample = sample),
-		expand('interproscan/{sample}.tsv', sample = sample),
+		expand('interproscan/{sample}.augustus.aa.tsv', sample = sample),
 		expand('Genes/{sample}.fa', sample = sample),
 		'augustus_statistics.log',
 		'training/Merged.gb',
-		'p450.combined.fa'		
+#		'p450.combined.fa'		
 
 rule miniprot:
         input:
@@ -109,17 +109,18 @@ rule interproscan:
 	input:
 		augustus_aa = expand('augustus/{sample}.augustus.aa', sample = sample)
 	output:
-		interpro = 'interproscan/{sample}.tsv'
+		directory = 'interproscan/',
+		interpro = 'interproscan/{sample}.augustus.aa.tsv'
 	shell:
 		'''
 		for file in {input.augustus_aa}; do
-			../interproscan-5.65-97.0/interproscan.sh -i "$file" -f tsv -dp >  {output}
+			../interproscan-5.65-97.0/interproscan.sh -i "$file" -f tsv -d {output.directory}
 		done
 		'''
 
 rule interpro_filter1:
 	input:
-		interpro = expand('interproscan/{sample}.tsv', sample = sample)
+		interpro = expand('interproscan/{sample}.augustus.aa.tsv', sample = sample)
 	output:
 		'true_p450.txt'
 	shell:
@@ -143,19 +144,19 @@ rule interpro_filter2:
 		'''
 
 
-rule reformat_combine:
-	input:
-		augustus_aa = expand('augustus/{sample}.augustus.aa', sample = sample)
-	output:
-		'p450.combined.fa'
-	shell:
-		'''
-		for file in {input.augustus_aa}; do
-			if [ -e "$file" ]; then
-				filename=$(basename "$file" .augustus.aa)
-				
-				sed "s/t1/$filename/g" {input.augustus_aa} >> {output}
-			fi
-		done
-		'''
+#rule reformat_combine:
+#	input:
+#		augustus_aa = expand('augustus/{sample}.augustus.aa', sample = sample)
+#	output:
+#		'p450.combined.fa'
+#	shell:
+#		'''
+#		for file in {input.augustus_aa}; do
+#			if [ -e "$file" ]; then
+#				filename=$(basename "$file" .augustus.aa)
+#				
+#				sed "s/t1/$filename/g" {input.augustus_aa} >> {output}
+#			fi
+#		done
+#		'''
 
