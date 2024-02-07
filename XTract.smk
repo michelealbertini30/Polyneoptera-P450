@@ -1,4 +1,4 @@
-configfile: 'config.smk.yaml'
+configfile: 'logs/config.smk.yaml'
 miniprot_cores=config['Run']['Miniprot_cores']
 agat_exp=config['Run']['Agat_expansion']
 
@@ -16,14 +16,15 @@ rule all:
 		expand('augustus/{sample}.augustus.codingseq', sample = sample),
 		expand('interproscan/{sample}.augustus.aa.tsv', sample = sample),
 		expand('Genes/{sample}.fa', sample = sample),
-		'augustus_statistics.log',
-		'training/Merged.gb',
+		expand('Genes/{sample}.filtered.txt', sample = sample),
+		'logs/augustus_statistics.log',
+#		'training/Merged.gb',
 #		'p450.combined.fa'		
 
 rule miniprot:
         input:
                 genome = 'Genomes/{sample}.fna',
-                proteins = 'UniProt_P450_RInsecta.fasta'
+                proteins = 'refNCBI/UniProt_P450_RInsecta.fasta'
         threads:
                 config['Run']['Threads']
         output:
@@ -74,7 +75,7 @@ rule augustus_statistics:
         input:
                 augustus_hits = expand('augustus/{sample}.augustus.gff', sample = sample)
         output:
-                'augustus_statistics.log'
+                'logs/augustus_statistics.log'
 	shell:
 		'''
 		echo -e "File\t\tN.hits\t\tUnique" > {output}
@@ -104,35 +105,31 @@ rule augustus_extract:
 		perl {getAnnoFasta} {input.augustus_hits} | tee {output.codingseq}
 		'''
 
-
 rule interproscan:
 	input:
-		augustus_aa = expand('augustus/{sample}.augustus.aa', sample = sample)
+		augustus_aa = 'augustus/{sample}.augustus.aa'
 	output:
-		directory = 'interproscan/',
 		interpro = 'interproscan/{sample}.augustus.aa.tsv'
 	shell:
 		'''
-		for file in {input.augustus_aa}; do
-			../interproscan-5.65-97.0/interproscan.sh -i "$file" -f tsv -d {output.directory}
-		done
+		../interproscan-5.65-97.0/interproscan.sh -i {input.augustus_aa} -f tsv -o {output.interpro}
 		'''
 
 rule interpro_filter1:
 	input:
 		interpro = expand('interproscan/{sample}.augustus.aa.tsv', sample = sample)
 	output:
-		'true_p450.txt'
+		trueP450 = 'Genes/{sample}.filtered.txt'
 	shell:
 		'''
 		result=$(awk '/P450/ {{print $1}}' {input.interpro} | sort -u)
-		echo -e "$result" >> {output}		
+		echo -e "$result" >> {output.trueP450}		
 		'''
 
 rule interpro_filter2:
 	input:
-		augustus_aa = expand('augustus/{sample}.augustus.aa', sample = sample),
-		true_genes = 'true_p450.txt'
+		augustus_aa = 'augustus/{sample}.augustus.aa',
+		true_genes = 'Genes/{sample}.filtered.txt'
 	output:
 		final_genes = 'Genes/{sample}.fa'
 	shell:
