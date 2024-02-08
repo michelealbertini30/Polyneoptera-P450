@@ -117,13 +117,19 @@ rule interproscan:
 
 rule interpro_filter1:
 	input:
-		interpro = expand('interproscan/{sample}.augustus.aa.tsv', sample = sample)
+		interpro = 'interproscan/{sample}.augustus.aa.tsv'
 	output:
 		trueP450 = 'Genes/{sample}.truep450.txt'
 	shell:
 		'''
-		result=$(awk '/P450/ {{print $1}}' {input.interpro} | sort -u)
-		echo -e "$result" >> {output.trueP450}		
+		for file in {input.interpro}; do
+			if [ -e "$file" ]; then
+
+				result=$(awk '/P450/ {{print $1}}' "$file" | sort -u)
+				echo -e "$result" > {output.trueP450}
+
+			fi
+		done		
 		'''
 
 rule interpro_filter2:
@@ -166,7 +172,7 @@ rule interpro_filter2:
 					print_gene=true
 					echo "$line" >> "$temp_file"
 				else
-					print_gene=false
+                                        print_gene=false
 				fi
 			else
 				if [ "$print_gene" = true ]; then
@@ -174,11 +180,9 @@ rule interpro_filter2:
 				fi
 			fi
 		done < "$input_fasta_file"
-
-		mv "$temp_file" "Bros.filtered.fa"
+		mv "temp_file" {output.final_genes}
 
 		'''
-
 
 #rule reformat_combine:
 #	input:
