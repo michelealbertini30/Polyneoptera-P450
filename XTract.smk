@@ -16,7 +16,7 @@ rule all:
 		expand('augustus/{sample}.augustus.codingseq', sample = sample),
 		expand('interproscan/{sample}.augustus.aa.tsv', sample = sample),
 		expand('Genes/{sample}.fa', sample = sample),
-		expand('Genes/{sample}.filtered.txt', sample = sample),
+		expand('Genes/{sample}.truep450.txt', sample = sample),
 		'logs/augustus_statistics.log',
 #		'training/Merged.gb',
 #		'p450.combined.fa'		
@@ -119,7 +119,7 @@ rule interpro_filter1:
 	input:
 		interpro = expand('interproscan/{sample}.augustus.aa.tsv', sample = sample)
 	output:
-		trueP450 = 'Genes/{sample}.filtered.txt'
+		trueP450 = 'Genes/{sample}.truep450.txt'
 	shell:
 		'''
 		result=$(awk '/P450/ {{print $1}}' {input.interpro} | sort -u)
@@ -134,9 +134,48 @@ rule interpro_filter2:
 		final_genes = 'Genes/{sample}.fa'
 	shell:
 		'''
-		while IFS= read -r gene_name; do
-			awk -v gene="$gene_name" '/^>/ {{if (p) printf ""; p=0}} $1 == ">" gene {{p=1; print}}' {input.augustus_aa} >> {output}
-		done < {input.true_genes}
+		input_fasta_file={input.augustus_aa}
+		true_genes={input.true_genes}
+
+		if [ ! -f "$input_fasta_file" ]; then
+			echo "Input fasta file $input_fasta_file not found."
+			exit 1
+		fi
+
+		if [ ! -f "$true_genes_file" ]; then
+			echo "True genes file $true_genes_file not found."
+			exit 1
+		fi
+
+# Create a temporary file to store the filtered fasta
+		temp_file=$(mktemp)
+
+# Read true genes into an associative array for quick lookup
+		declare -A true_genes
+		while IFS= read -r gene; do
+			true_genes["$gene"]=1
+		done < "$true_genes_file"
+
+# Read the input fasta file and filter out genes not in the true genes list
+		current_gene=""
+		print_gene=false
+		while IFS= read -r line; do
+			if [[ $line == ">"* ]]; then
+				current_gene="${{line:1}}"
+				if [ -n "${{true_genes[$current_gene]}}" ]; then
+					print_gene=true
+					echo "$line" >> "$temp_file"
+				else
+					print_gene=false
+				fi
+			else
+				if [ "$print_gene" = true ]; then
+					echo "$line" >> "$temp_file"
+				fi
+			fi
+		done < "$input_fasta_file"
+
+		mv "$temp_file" "Bros.filtered.fa"
 
 		'''
 
