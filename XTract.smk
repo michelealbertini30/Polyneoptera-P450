@@ -135,21 +135,19 @@ rule interpro_filter1:
 rule interpro_filter2:
 	input:
 		augustus_aa = 'augustus/{sample}.augustus.aa',
-		true_genes = 'Genes/{sample}.filtered.txt'
+		true_genes = 'Genes/{sample}.truep450.txt'
 	output:
 		final_genes = 'Genes/{sample}.fa'
 	shell:
 		'''
 		input_fasta_file={input.augustus_aa}
-		true_genes={input.true_genes}
+		true_genes_file={input.true_genes}
 
 		if [ ! -f "$input_fasta_file" ]; then
-			echo "Input fasta file $input_fasta_file not found."
 			exit 1
 		fi
 
 		if [ ! -f "$true_genes_file" ]; then
-			echo "True genes file $true_genes_file not found."
 			exit 1
 		fi
 
