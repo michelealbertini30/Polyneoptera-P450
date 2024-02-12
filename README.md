@@ -59,6 +59,12 @@ Miniprot aligns a protein sequence against a genome with affine gap penalty, spl
 * [Agat](https://github.com/NBISweden/AGAT)\
 **A**nother **G**tf/**G**ff **A**nalysis **T**oolkit: Suite of tools to handle gene annotation in any GTF/GFF format.
 
+* [Augustus](https://github.com/Gaius-Augustus/Augustus)\
+Gene prediction program used as an ab initio predictor but can also incorporate hints on the gene structure from extrinsic sources.
+
+* [Interproscan](https://github.com/ebi-pf-team/interproscan)\
+Database that integrates predictive information about protein function, gene family belonging, and contained domains.
+
 * [GeneRax](https://github.com/BenoitMorel/GeneRax)\
 Parallel tool for species tree-aware maximum likelihood based gene family tree inference under gene duplication, transfer and loss.
 
