@@ -9,27 +9,17 @@ sample = glob_wildcards('Genomes/{sample}.fna')[0]
 
 rule all:
 	input:
-		expand('Busco/{sample}.busco.fa', sample = sample),
 		expand('miniprot_gff/{sample}.gff', sample = sample),
 		expand('agat_cds/{sample}.cds.fna', sample = sample),
 		expand('augustus/{sample}.augustus.gff', sample = sample),
 		expand('augustus/{sample}.augustus.aa', sample = sample),
 		expand('augustus/{sample}.augustus.codingseq', sample = sample),
 		expand('interproscan/{sample}.augustus.aa.tsv', sample = sample),
-#		expand('Genes/{sample}.fa', sample = sample),
+		expand('Genes/{sample}.filtered.fa', sample = sample),
 		expand('Genes/{sample}.truep450.txt', sample = sample),
 		'logs/augustus_statistics.log',
 #		'training/Merged.gb',
 #		'p450.combined.fa'		
-
-rule busco:
-	input:
-		genome = 'Genomes/{sample}.fna'
-	output:
-		busco = 'Busco/{sample}.busco.fa'
-	conda: 'busco.yaml'
-	shell:
-		'busco -i {input.genome} -m geno -f -l insecta_odb10 -o {output.busco}'
 
 rule miniprot:
         input:
@@ -142,6 +132,14 @@ rule interpro_filter1:
 		done		
 		'''
 
+rule interpro_filter2:
+	input:
+		augustus_aa = 'augustus/{sample}.augustus.aa',
+		true_genes = 'Genes/{sample}.truep450.txt'
+	output:
+		final_genes = 'Genes/{sample}.filtered.fa'
+	shell:
+		'bash Scripts/Interpro.filter.sh {input} {output}'
 
 #rule reformat_combine:
 #	input:
