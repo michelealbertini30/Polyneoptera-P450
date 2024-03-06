@@ -9,7 +9,6 @@ sample = glob_wildcards('Genomes/{sample}.fna')[0]
 
 rule all:
 	input:
-		expand('Busco/{sample}.busco.fa', sample = sample),
 		expand('miniprot_gff/{sample}.gff', sample = sample),
 		expand('agat_cds/{sample}.cds.fna', sample = sample),
 		expand('augustus/{sample}.augustus.gff', sample = sample),
@@ -21,15 +20,6 @@ rule all:
 		'logs/augustus_statistics.log',
 #		'training/Merged.gb',
 #		'p450.combined.fa'		
-
-rule busco:
-	input:
-		genome = 'Genomes/{sample}.fna'
-	output:
-		busco = 'Busco/{sample}.busco.fa'
-	conda: 'busco.yaml'
-	shell:
-		'busco -i {input.genome} -m geno -f -l insecta_odb10 -o {output.busco}'
 
 rule miniprot:
         input:
@@ -50,28 +40,6 @@ rule agat_exp:
                 'agat_cds/{sample}.cds.fna'
         shell:
                 'agat_sp_extract_sequences.pl --gff {input.miniprot} --fasta {input.genomes} -t cds --up {agat_exp} --down {agat_exp} -o {output}'
-
-### AUGUSTUS TRAINING ###
-
-#rule gff2gb:
-#	input:
-#		genome = 'Genomes/{sample}.fna',
-#		miniprot = rules.miniprot.output
-#	output:
-#		'training/{sample}.gb'
-#	shell:
-#		'perl training/Scripts/gff2gbSmallDNA.pl {input.miniprot} {input.genome} 16000 {output}'
-#
-#rule gb_merge:
-#	input:
-#		gb = expand('training/{sample}.gb', sample = sample)
-#	output:
-#		'training/Merged.gb'
-#	shell:
-#		'cat {input.gb} > {output}'
-#
-#
-##############################
 
 rule augustus:
         input:

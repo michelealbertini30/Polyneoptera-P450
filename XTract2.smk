@@ -41,28 +41,6 @@ rule agat_exp:
         shell:
                 'agat_sp_extract_sequences.pl --gff {input.miniprot} --fasta {input.genomes} -t cds --up {agat_exp} --down {agat_exp} -o {output}'
 
-### AUGUSTUS TRAINING ###
-
-#rule gff2gb:
-#	input:
-#		genome = 'Genomes/{sample}.fna',
-#		miniprot = rules.miniprot.output
-#	output:
-#		'training/{sample}.gb'
-#	shell:
-#		'perl training/Scripts/gff2gbSmallDNA.pl {input.miniprot} {input.genome} 16000 {output}'
-#
-#rule gb_merge:
-#	input:
-#		gb = expand('training/{sample}.gb', sample = sample)
-#	output:
-#		'training/Merged.gb'
-#	shell:
-#		'cat {input.gb} > {output}'
-#
-#
-##############################
-
 rule augustus:
         input:
                 protein_coordinates = rules.agat_exp.output
@@ -137,9 +115,17 @@ rule interpro_filter2:
 		augustus_aa = 'augustus/{sample}.augustus.aa',
 		true_genes = 'Genes/{sample}.truep450.txt'
 	output:
-		final_genes = 'Genes/{sample}.filtered.fa'
+		genes = 'Genes/{sample}.filtered.fa'
 	shell:
 		'bash Scripts/Interpro.filter.sh {input} {output}'
+
+#rule cdhit:
+#	input:
+#		genes = 'Genes/{sample}.filtered.fa'
+#	output:
+#		final_genes = 'Genes/{sample}.filtered.cdhit.fa'
+#	shell:
+#		'cd-hit -i {input.genes} -o {output.final_genes} -c 1.00
 
 #rule reformat_combine:
 #	input:
