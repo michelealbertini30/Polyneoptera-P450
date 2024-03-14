@@ -18,13 +18,11 @@ rule all:
 #		expand('Genes/{sample}.fa', sample = sample),
 		expand('Genes/{sample}.truep450.txt', sample = sample),
 		'logs/augustus_statistics.log',
-#		'training/Merged.gb',
-#		'p450.combined.fa'		
 
 rule miniprot:
         input:
                 genome = 'Genomes/{sample}.fna',
-                proteins = 'refNCBI/UniProt_P450_RInsecta.fasta'
+                proteins = 'refNCBI/UniProt_P450_Reviewed_Insecta.fasta'
         threads:
                 config['Run']['Threads']
         output:

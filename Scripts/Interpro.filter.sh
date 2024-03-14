@@ -3,7 +3,6 @@
 # Directory containing input fasta files
 input_dir=$1
 true_genes_file=$2
-final_file=$3
 
 # Check if input directory exists
 if [ ! -d "$input_dir" ]; then
@@ -50,7 +49,7 @@ for input_fasta_file in "$input_dir"/*.augustus.aa; do
     done < "$input_fasta_file"
 
     # Rename the temporary file to use the base name of the input file
-#    final_file="${base_name}.filtered.fa"
+    final_file="${base_name}.filtered.fa"
     mv "$temp_file" "$final_file"
 
     echo "Filtered file created: $final_file"

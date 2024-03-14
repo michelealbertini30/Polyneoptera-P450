@@ -17,6 +17,7 @@ rule all:
 		expand('interproscan/{sample}.augustus.aa.tsv', sample = sample),
 		expand('Genes/{sample}.filtered.fa', sample = sample),
 		expand('Genes/{sample}.truep450.txt', sample = sample),
+		expand('Genes/{sample}.filtered.cdhit.fa', sample = sample),
 		'logs/augustus_statistics.log',
 #		'training/Merged.gb',
 #		'p450.combined.fa'		
@@ -119,13 +120,13 @@ rule interpro_filter2:
 	shell:
 		'bash Scripts/Interpro.filter.sh {input} {output}'
 
-#rule cdhit:
-#	input:
-#		genes = 'Genes/{sample}.filtered.fa'
-#	output:
-#		final_genes = 'Genes/{sample}.filtered.cdhit.fa'
-#	shell:
-#		'cd-hit -i {input.genes} -o {output.final_genes} -c 1.00
+rule cdhit:
+	input:
+		genes = 'Genes/{sample}.filtered.fa'
+	output:
+		final_genes = 'Genes/{sample}.filtered.cdhit.fa'
+	shell:
+		'cd-hit -i {input.genes} -o {output.final_genes} -c 1.00'
 
 #rule reformat_combine:
 #	input:
