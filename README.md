@@ -5,7 +5,7 @@ This project aims to study the evolution of Cytochome P450 (or CYPs) in Polyneop
 
 <div style="background-color: #f2f2f2; padding: 10px; border: 3px solid #ddd; border-radius: 2px;">
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/P450cycle.svg/750px-P450cycle.svg.png)
+![](https://www.researchgate.net/publication/324604270/figure/fig1/AS:617364852834305@1524202659620/Typical-structure-of-a-cytochrome-P450-exemplified-by-OxyB-tei-CYP165B7-from.png)
 
 </div>
 
