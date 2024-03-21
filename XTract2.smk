@@ -15,17 +15,18 @@ rule all:
 		expand('augustus/{sample}.augustus.aa', sample = sample),
 		expand('augustus/{sample}.augustus.codingseq', sample = sample),
 		expand('interproscan/{sample}.augustus.aa.tsv', sample = sample),
-		expand('Genes/{sample}.filtered.fa', sample = sample),
+#		expand('Genes/{sample}.filtered.fa', sample = sample),
 		expand('Genes/{sample}.truep450.txt', sample = sample),
 		expand('Genes/{sample}.filtered.cdhit.fa', sample = sample),
-		'logs/augustus_statistics.log',
-#		'training/Merged.gb',
-#		'p450.combined.fa'		
+		expand('Genes/{sample}.filtered.cdhit.reformat.fa', sample = sample),
+		expand('Mafft/{sample}.mafft.fa', sample = sample),
+		'logs/augustus_statistics.log'
+				
 
 rule miniprot:
         input:
                 genome = 'Genomes/{sample}.fna',
-                proteins = 'refNCBI/UniProt_P450_RInsecta.fasta'
+                proteins = 'UniProt_P450_Reviewed_Insecta.fasta'
         threads:
                 config['Run']['Threads']
         output:
@@ -111,14 +112,14 @@ rule interpro_filter1:
 		done		
 		'''
 
-rule interpro_filter2:
-	input:
-		augustus_aa = 'augustus/{sample}.augustus.aa',
-		true_genes = 'Genes/{sample}.truep450.txt'
-	output:
-		genes = 'Genes/{sample}.filtered.fa'
-	shell:
-		'bash Scripts/Interpro.filter.sh {input} {output}'
+#rule interpro_filter2:
+#	input:
+#		augustus_aa = 'augustus/{sample}.augustus.aa',
+#		true_genes = 'Genes/{sample}.truep450.txt'
+#	output:
+#		genes = 'Genes/{sample}.filtered.fa'
+#	shell:
+#		'bash Scripts/Interpro.filter.sh {input} {output}'
 
 rule cdhit:
 	input:
@@ -128,19 +129,25 @@ rule cdhit:
 	shell:
 		'cd-hit -i {input.genes} -o {output.final_genes} -c 1.00'
 
-#rule reformat_combine:
-#	input:
-#		augustus_aa = expand('augustus/{sample}.augustus.aa', sample = sample)
-#	output:
-#		'p450.combined.fa'
-#	shell:
-#		'''
-#		for file in {input.augustus_aa}; do
-#			if [ -e "$file" ]; then
-#				filename=$(basename "$file" .augustus.aa)
-#				
-#				sed "s/t1/$filename/g" {input.augustus_aa} >> {output}
-#			fi
-#		done
-#		'''
+rule reformat_combine:
+	input:
+		genes = 'Genes/{sample}.filtered.cdhit.fa'
+	output:
+		reformat = 'Genes/{sample}.filtered.cdhit.reformat.fa'
+	shell:
+		'''
+		for file in {input.genes}; do
+			filename=$(basename "$file" .filtered.cdhit.fa)
 
+			sed "s/t1/$filename/g" {input.genes} > {output.reformat}
+
+               done
+
+		'''
+rule mafft:
+	input:
+		genes = 'Genes/{sample}.filtered.cdhit.reformat.fa'
+	output:
+		aligned = 'Mafft/{sample}.mafft.fa'
+	shell:
+		'mafft --auto {input.genes} > {output.aligned}'
