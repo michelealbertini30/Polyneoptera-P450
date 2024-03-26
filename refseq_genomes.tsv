@@ -57,3 +57,12 @@ GCF_021130785.1	Hvit	Homalodisca vitripennis
 GCA_963971405.1	Pgib	Psococerastis gibbosa
 #Thysanoptera
 GCA_033675135.1	Fint	Frankliniella intonsa
+#Others
+GCF_023701775.1  Harm  Helicoverpa armigera
+GCF_023101765.2  Sfur  Spodoptera frugiperda
+GCF_020184175.1  Agos  Aphis gossypii
+GCF_000475195.1  Dcit  Diaphorina citri
+GCF_014356525.2  Nlug  Nilaparvata lugens
+GCF_000500325.1  Ldec  Leptinotarsa decemlineata
+GCF_000002335.3  Tcas  Tribolium castaneum
+GCF_000001215.4  Dmel  Drosophila melanogaster
