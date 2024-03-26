@@ -22,7 +22,7 @@ rule all:
 rule miniprot:
         input:
                 genome = 'Genomes/{sample}.fna',
-                proteins = 'refNCBI/UniProt_P450_Reviewed_Insecta.fasta'
+                proteins = 'UniProt_P450_Reviewed_Insecta.fasta'
         threads:
                 config['Run']['Threads']
         output:

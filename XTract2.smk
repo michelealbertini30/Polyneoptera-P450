@@ -14,7 +14,8 @@ rule all:
 		expand('augustus/{sample}.augustus.gff', sample = sample),
 		expand('augustus/{sample}.augustus.aa', sample = sample),
 		expand('augustus/{sample}.augustus.codingseq', sample = sample),
-		expand('interproscan/{sample}.augustus.aa.tsv', sample = sample),
+		expand('interproscan/tsv/{sample}.augustus.aa.tsv', sample = sample),
+		expand('interproscan/gff/{sample}.augustus.aa.gff3', sample = sample),
 #		expand('Genes/{sample}.filtered.fa', sample = sample),
 		expand('Genes/{sample}.truep450.txt', sample = sample),
 		expand('Genes/{sample}.filtered.cdhit.fa', sample = sample),
@@ -85,15 +86,25 @@ rule augustus_extract:
 		perl {getAnnoFasta} {input.augustus_hits} | tee {output.codingseq}
 		'''
 
-rule interproscan:
+rule interproscan_tsv:
 	input:
 		augustus_aa = 'augustus/{sample}.augustus.aa'
 	output:
-		interpro = 'interproscan/{sample}.augustus.aa.tsv'
+		interpro = 'interproscan/tsv/{sample}.augustus.aa.tsv'
 	shell:
 		'''
 		../interproscan-5.65-97.0/interproscan.sh -i {input.augustus_aa} -f tsv -o {output.interpro}
 		'''
+
+rule interproscan_gff:
+        input:
+                augustus_aa = 'augustus/{sample}.augustus.aa'
+        output:
+                interpro = 'interproscan/gff/{sample}.augustus.aa.gff3'
+        shell:
+                '''
+                ../interproscan-5.65-97.0/interproscan.sh -i {input.augustus_aa} -f gff3 -o {output.interpro}
+                '''
 
 rule interpro_filter1:
 	input:
