@@ -15,31 +15,32 @@ GCA_030762175.1	Mvio	Metallyticus violacea
 #Phasmatodea
 GCA_032445375.1	Bros	Bacillus rossius
 GCA_029891345.1	Daus	Dryococelus australis
-GCA_902141385.1	Tcal	Tinema californicum
+GCA_002926335.1	Tcri	Timema cristinae
 GCA_002778355.1	Choo	Clitarchus hookeri
 GCA_003012365.1	Mext	Medauroidea extradentata
-GCA_946902985.2 Mth2  Meconema thalassinum  
 #Orthoptera
-GCA_026315105.1 Lmig  Locusta migratoria
-GCF_023897955.1 Sgre  Schistocerca gregaria
+GCA_026315105.1 Lmig	Locusta migratoria
+GCF_023897955.1 Sgre	Schistocerca gregaria
 GCA_946902985.2	Mtha	Meconema thalassinum
 GCA_031002005.1	Vvia	Vandiemenella viatica
 GCA_017312745.1	Gbim	Gryllus bimaculatus
 GCA_031308135.1	Adom	Acheta domesticus
-GCA_900249655.1	Xbra	Xenocatantops brachycerus
+GCA_900249655.1	Xbra	Xenocatantops brachycerus	ctg
 GCA_002313205.1	Lkoh	Laupala kohalensis
 GCA_011170035.1	Tocc	Teleogryllus occipitalis
-GCA_034510155.1 Eocu  Eucriotettix oculatus
+GCA_034510155.1 Eocu	Eucriotettix oculatus
+GCA_037074705.1	Ztra	Zhengitettix transpicula
 #Plecoptera
-GCA_907164805.1	Bpun	Brachyptera putata
+GCA_907164805.1	Bput	Brachyptera putata
 GCA_921293315.2	Npic	Nemurella pictetii
 GCA_947568835.1	Pmon	Protonemura montana
 GCA_921293005.1 Ndub	Nemoura dubitans
 GCA_945910005.1 Igra	Isoperla grammatica
 GCA_934045905.1 Lnig	Leuctra nigra
-GCA_024449915.1 Scol	Swelts coloradensis
+GCA_024449915.1 Scol	Swelts coloradensis	ctg
+GCA_003287335.1	Ltum	Lednia tumana
 #Dermaptera
-GCA_963082975.1	Lmin	Lebia minor
+GCA_963082975.1	Lmin	Labia minor
 GCA_024734495.1 Faur	Forficula auricularia
 GCA_023213315.1	Eann	Euborellia annulipes
 GCA_010014785.2	Amar	Anisolabis maritima
@@ -57,11 +58,11 @@ GCA_963971405.1	Pgib	Psococerastis gibbosa
 #Thysanoptera
 GCA_033675135.1	Fint	Frankliniella intonsa
 #Others
-GCF_023701775.1  Harm  Helicoverpa armigera
-GCF_023101765.2  Sfur  Spodoptera frugiperda
-GCF_020184175.1  Agos  Aphis gossypii
-GCF_000475195.1  Dcit  Diaphorina citri
-GCF_014356525.2  Nlug  Nilaparvata lugens
-GCF_000500325.1  Ldec  Leptinotarsa decemlineata
-GCF_000002335.3  Tcas  Tribolium castaneum
-GCF_000001215.4  Dmel  Drosophila melanogaster
+GCF_023701775.1	Harm	Helicoverpa armigera
+GCF_023101765.2	Sfur	Spodoptera frugiperda
+GCF_020184175.1	Agos	Aphis gossypii
+GCF_000475195.1	Dcit	Diaphorina citri
+GCF_014356525.2	Nlug	Nilaparvata lugens
+GCF_000500325.1	Ldec	Leptinotarsa decemlineata
+GCF_000002335.3	Tcas	Tribolium castaneum
+GCF_000001215.4	Dmel	Drosophila melanogaster
