@@ -14,10 +14,14 @@ rule all:
 		expand('augustus/{sample}.augustus.gff', sample = sample),
 		expand('augustus/{sample}.augustus.aa', sample = sample),
 		expand('augustus/{sample}.augustus.codingseq', sample = sample),
-		expand('interproscan/{sample}.augustus.aa.tsv', sample = sample),
-#		expand('Genes/{sample}.fa', sample = sample),
+		expand('interproscan/tsv/{sample}.augustus.aa.tsv', sample = sample),
+		expand('interproscan/gff/{sample}.augustus.aa.gff3', sample = sample),
+		expand('Genes/{sample}.filtered.fa', sample = sample),
 		expand('Genes/{sample}.truep450.txt', sample = sample),
-		'logs/augustus_statistics.log',
+		expand('Genes/{sample}.filtered.reformat.fa', sample = sample),
+#		expand('Mafft/{sample}.mafft.fa', sample = sample),
+		'logs/augustus_statistics.log'
+				
 
 rule miniprot:
         input:
@@ -81,19 +85,29 @@ rule augustus_extract:
 		perl {getAnnoFasta} {input.augustus_hits} | tee {output.codingseq}
 		'''
 
-rule interproscan:
+rule interproscan_tsv:
 	input:
 		augustus_aa = 'augustus/{sample}.augustus.aa'
 	output:
-		interpro = 'interproscan/{sample}.augustus.aa.tsv'
+		interpro = 'interproscan/tsv/{sample}.augustus.aa.tsv'
 	shell:
 		'''
 		../interproscan-5.65-97.0/interproscan.sh -i {input.augustus_aa} -f tsv -o {output.interpro}
 		'''
 
+rule interproscan_gff:
+        input:
+                augustus_aa = 'augustus/{sample}.augustus.aa'
+        output:
+                interpro = 'interproscan/gff/{sample}.augustus.aa.gff3'
+        shell:
+                '''
+                ../interproscan-5.65-97.0/interproscan.sh -i {input.augustus_aa} -f gff3 -o {output.interpro}
+                '''
+
 rule interpro_filter1:
 	input:
-		interpro = 'interproscan/{sample}.augustus.aa.tsv'
+		interpro = 'interproscan/tsv/{sample}.augustus.aa.tsv'
 	output:
 		trueP450 = 'Genes/{sample}.truep450.txt'
 	shell:
@@ -108,20 +122,34 @@ rule interpro_filter1:
 		done		
 		'''
 
+rule interpro_filter2:
+        input:
+                fasta = 'augustus/{sample}.augustus.aa',
+                txt = 'Genes/{sample}.truep450.txt'
+        output:
+                'Genes/{sample}.filtered.fa'
+        shell:
+                'bash Scripts/Interpro_filter_smk.sh {input.fasta} {input.txt} {output}'
 
-#rule reformat_combine:
+rule reformat_combine:
+	input:
+		genes = 'Genes/{sample}.filtered.fa'
+	output:
+		reformat = 'Genes/{sample}.filtered.reformat.fa'
+	shell:
+		'''
+		for file in {input.genes}; do
+			filename=$(basename "$file" .filtered.fa)
+
+			sed "s/t1/$filename/g" {input.genes} > {output.reformat}
+
+               done
+
+		'''
+#rule mafft:
 #	input:
-#		augustus_aa = expand('augustus/{sample}.augustus.aa', sample = sample)
+#		genes = 'Genes/{sample}.filtered.reformat.fa'
 #	output:
-#		'p450.combined.fa'
+#		aligned = 'Mafft/{sample}.mafft.fa'
 #	shell:
-#		'''
-#		for file in {input.augustus_aa}; do
-#			if [ -e "$file" ]; then
-#				filename=$(basename "$file" .augustus.aa)
-#				
-#				sed "s/t1/$filename/g" {input.augustus_aa} >> {output}
-#			fi
-#		done
-#		'''
-
+#		'mafft --dash {input.genes} > {output.aligned}'
