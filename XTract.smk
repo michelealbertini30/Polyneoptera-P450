@@ -1,6 +1,5 @@
 configfile: 'logs/config.smk.yaml'
-miniprot_cores=config['Run']['Miniprot_cores']
-agat_exp=config['Run']['Agat_expansion']
+expansion=config['Run']['Expansion']
 
 getAnnoFasta=config['Scripts']['getAnnoFasta']
 
@@ -10,7 +9,11 @@ sample = glob_wildcards('Genomes/{sample}.fna')[0]
 rule all:
 	input:
 		expand('miniprot_gff/{sample}.gff', sample = sample),
-		expand('agat_cds/{sample}.cds.fna', sample = sample),
+		expand('fai/{sample}.fai', sample = sample),
+		expand('bedtools/{sample}.bed', sample = sample),
+		expand('bedtools/{sample}.merge.bed', sample = sample),
+		expand('bedtools/{sample}.merge.slop.bed', sample = sample),
+		expand('bedtools/{sample}.fasta', sample = sample),
 		expand('augustus/{sample}.augustus.gff', sample = sample),
 		expand('augustus/{sample}.augustus.aa', sample = sample),
 		expand('augustus/{sample}.augustus.codingseq', sample = sample),
@@ -19,10 +22,9 @@ rule all:
 		expand('Genes/{sample}.filtered.fa', sample = sample),
 		expand('Genes/{sample}.truep450.txt', sample = sample),
 		expand('Genes/{sample}.filtered.reformat.fa', sample = sample),
-#		expand('Mafft/{sample}.mafft.fa', sample = sample),
+		expand('Mafft/{sample}.mafft.fa', sample = sample),
 		'logs/augustus_statistics.log'
 				
-
 rule miniprot:
         input:
                 genome = 'Genomes/{sample}.fna',
@@ -34,22 +36,63 @@ rule miniprot:
         shell:
                 'miniprot -t{miniprot_cores} --gff {input.genome} {input.proteins} > {output}'
 
-rule agat_exp:
-        input:
-                genomes = 'Genomes/{sample}.fna',
-                miniprot = rules.miniprot.output
-        output:
-                'agat_cds/{sample}.cds.fna'
-        shell:
-                'agat_sp_extract_sequences.pl --gff {input.miniprot} --fasta {input.genomes} -t cds --up {agat_exp} --down {agat_exp} -o {output}'
+rule gff2bed:
+	input:
+		gff = 'miniprot_gff/{sample}.gff'
+	output:
+		bed = 'bedtools/{sample}.bed'
+	shell:
+		'agat_convert_sp_gff2bed.pl -g {input.gff} -o {output.bed}'
+
+rule bed_sort:
+	input:
+		bed = 'bedtools/{sample}.bed'
+	output:
+		sort = 'bedtools/{sample}.sorted.bed'
+	shell:
+		'sort -k1,1 -k2,2n {input.bed} > {output.sort}'
+
+rule bedtools_merge:
+	input:
+		bed = 'bedtools/{sample}.sorted.bed'
+	output:
+		merged = 'bedtools/{sample}.merge.bed'
+	shell:
+		'bedtools merge -c 1 -o collapse -i {input.bed} -delim "|" > {output.merged}'
+
+rule samtools_fai:
+	input:
+		fna = 'Genomes/{sample}.fna'
+	output:
+		fai = 'fai/{sample}.fai'
+	shell:
+		'samtools faidx {input.fna} -o {output.fai}'
+
+rule bedtools_slop:
+	input:
+		merged = 'bedtools/{sample}.merge.bed',
+		fai = 'fai/{sample}.fai'
+	output:
+		slopped = 'bedtools/{sample}.merge.slop.bed'
+	shell:
+		'bedtools slop -b {exp} -i {input.merged} -g {input.fai} > {output.slopped}'
+
+rule bedtools_getfasta:
+	input:
+		gen = 'Genomes/{sample}.fna',
+		slopped = 'bedtools/{sample}.merge.slop.bed'
+	output:
+		fasta = 'bedtools/{sample}.fasta'
+	shell:
+		'bedtools getfasta -fi {input.gen} -bed {input.slopped} > {output.fasta}'
 
 rule augustus:
         input:
-                protein_coordinates = rules.agat_exp.output
+                fasta = 'bedtools/{sample}.fasta'
         output:
                 'augustus/{sample}.augustus.gff'
         shell:
-                'augustus --species=fly --protein=on --codingseq=on --genemodel=complete {input.protein_coordinates} > {output}'
+                'augustus --species=fly --protein=on --codingseq=on --genemodel=complete {input.fasta} > {output}'
 
 rule augustus_statistics:
         input:
@@ -146,10 +189,10 @@ rule reformat_combine:
                done
 
 		'''
-#rule mafft:
-#	input:
-#		genes = 'Genes/{sample}.filtered.reformat.fa'
-#	output:
-#		aligned = 'Mafft/{sample}.mafft.fa'
-#	shell:
-#		'mafft --dash {input.genes} > {output.aligned}'
+rule mafft:
+	input:
+		genes = 'Genes/{sample}.filtered.reformat.fa'
+	output:
+		aligned = 'Mafft/{sample}.mafft.fa'
+	shell:
+		'mafft --dash {input.genes} > {output.aligned}'

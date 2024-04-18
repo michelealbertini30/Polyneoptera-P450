@@ -17,7 +17,6 @@ GCA_032445375.1	Bros	Bacillus rossius
 GCA_029891345.1	Daus	Dryococelus australis
 GCA_002926335.1	Tcri	Timema cristinae
 GCA_002778355.1	Choo	Clitarchus hookeri
-GCA_003012365.1	Mext	Medauroidea extradentata
 #Orthoptera
 GCA_026315105.1 Lmig	Locusta migratoria
 GCF_023897955.1 Sgre	Schistocerca gregaria
@@ -37,8 +36,7 @@ GCA_947568835.1	Pmon	Protonemura montana
 GCA_921293005.1 Ndub	Nemoura dubitans
 GCA_945910005.1 Igra	Isoperla grammatica
 GCA_934045905.1 Lnig	Leuctra nigra
-GCA_024449915.1 Scol	Swelts coloradensis	ctg
-GCA_003287335.1	Ltum	Lednia tumana
+GCA_024449915.1 Scol	Sweltsa coloradensis	ctg
 #Dermaptera
 GCA_963082975.1	Lmin	Labia minor
 GCA_024734495.1 Faur	Forficula auricularia
