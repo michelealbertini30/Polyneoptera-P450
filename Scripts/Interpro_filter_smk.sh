@@ -5,8 +5,6 @@ fasta=$1
 txt=$2
 out=$3
 
-base_name=$(basename "$fasta" .augustus.aa)
-
 declare -A true_genes
 while IFS= read -r gene; do
 	true_genes["$gene"]=1

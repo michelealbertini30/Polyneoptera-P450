@@ -1,5 +1,5 @@
 configfile: 'logs/config.smk.yaml'
-expansion=config['Run']['Expansion']
+exp=config['Run']['Expansion']
 
 getAnnoFasta=config['Scripts']['getAnnoFasta']
 
@@ -12,18 +12,20 @@ rule all:
 		expand('fai/{sample}.fai', sample = sample),
 		expand('bedtools/{sample}.bed', sample = sample),
 		expand('bedtools/{sample}.merge.bed', sample = sample),
-		expand('bedtools/{sample}.merge.slop.bed', sample = sample),
+		expand('bedtools/{sample}.slop.bed', sample = sample),
 		expand('bedtools/{sample}.fasta', sample = sample),
 		expand('augustus/{sample}.augustus.gff', sample = sample),
 		expand('augustus/{sample}.augustus.aa', sample = sample),
 		expand('augustus/{sample}.augustus.codingseq', sample = sample),
+		expand('augustus/{sample}.augustus.nt', sample = sample),
 		expand('interproscan/tsv/{sample}.augustus.aa.tsv', sample = sample),
-		expand('interproscan/gff/{sample}.augustus.aa.gff3', sample = sample),
-		expand('Genes/{sample}.filtered.fa', sample = sample),
+#		expand('interproscan/gff/{sample}.augustus.aa.gff3', sample = sample),
+		expand('Genes/{sample}.filtered.aa', sample = sample),
+		expand('Genes/{sample}.filtered.nt', sample = sample),
 		expand('Genes/{sample}.truep450.txt', sample = sample),
-		expand('Genes/{sample}.filtered.reformat.fa', sample = sample),
-		expand('Mafft/{sample}.mafft.fa', sample = sample),
-		'logs/augustus_statistics.log'
+		expand('Genes/{sample}.filtered.reformat.aa', sample = sample),
+		expand('Genes/{sample}.cdhit.aa', sample = sample),
+#		expand('Mafft/{sample}.mafft.fa', sample = sample),
 				
 rule miniprot:
         input:
@@ -34,7 +36,7 @@ rule miniprot:
         output:
                 'miniprot_gff/{sample}.gff'
         shell:
-                'miniprot -t{miniprot_cores} --gff {input.genome} {input.proteins} > {output}'
+                'miniprot --gff {input.genome} {input.proteins} > {output}'
 
 rule gff2bed:
 	input:
@@ -44,9 +46,26 @@ rule gff2bed:
 	shell:
 		'agat_convert_sp_gff2bed.pl -g {input.gff} -o {output.bed}'
 
+rule samtools_fai:
+        input:
+                fna = 'Genomes/{sample}.fna'
+        output:
+                fai = 'fai/{sample}.fai'
+        shell:
+                'samtools faidx {input.fna} -o {output.fai}'
+
+rule bedtools_slop:
+        input:
+                bed = 'bedtools/{sample}.bed',
+                fai = 'fai/{sample}.fai'
+        output:
+                slopped = 'bedtools/{sample}.slop.bed'
+        shell:
+                'bedtools slop -b {exp} -i {input.bed} -g {input.fai} > {output.slopped}'
+
 rule bed_sort:
 	input:
-		bed = 'bedtools/{sample}.bed'
+		bed = 'bedtools/{sample}.slop.bed'
 	output:
 		sort = 'bedtools/{sample}.sorted.bed'
 	shell:
@@ -60,27 +79,10 @@ rule bedtools_merge:
 	shell:
 		'bedtools merge -c 1 -o collapse -i {input.bed} -delim "|" > {output.merged}'
 
-rule samtools_fai:
-	input:
-		fna = 'Genomes/{sample}.fna'
-	output:
-		fai = 'fai/{sample}.fai'
-	shell:
-		'samtools faidx {input.fna} -o {output.fai}'
-
-rule bedtools_slop:
-	input:
-		merged = 'bedtools/{sample}.merge.bed',
-		fai = 'fai/{sample}.fai'
-	output:
-		slopped = 'bedtools/{sample}.merge.slop.bed'
-	shell:
-		'bedtools slop -b {exp} -i {input.merged} -g {input.fai} > {output.slopped}'
-
 rule bedtools_getfasta:
 	input:
 		gen = 'Genomes/{sample}.fna',
-		slopped = 'bedtools/{sample}.merge.slop.bed'
+		slopped = 'bedtools/{sample}.merge.bed'
 	output:
 		fasta = 'bedtools/{sample}.fasta'
 	shell:
@@ -93,28 +95,6 @@ rule augustus:
                 'augustus/{sample}.augustus.gff'
         shell:
                 'augustus --species=fly --protein=on --codingseq=on --genemodel=complete {input.fasta} > {output}'
-
-rule augustus_statistics:
-        input:
-                augustus_hits = expand('augustus/{sample}.augustus.gff', sample = sample)
-        output:
-                'logs/augustus_statistics.log'
-	shell:
-		'''
-		echo -e "File\t\tN.hits\t\tUnique" > {output}
-
-		for file in {input.augustus_hits}; do
-			if [ -e "$file" ]; then
-				filename=$(basename "$file" .augustus.gff)
-
-				result1=$(grep -c "start gene" "$file")
-				result2=$(grep -A 1 "start gene" "$file" | awk '/MP/ {{print $1}}' | sort -u | wc -l)
-
-				echo -e "$filename\t\t$result1\t\t$result2" >> {output}
-			fi
-		done
-
-		'''
 
 rule augustus_extract:
 	input:
@@ -138,15 +118,15 @@ rule interproscan_tsv:
 		../interproscan-5.65-97.0/interproscan.sh -i {input.augustus_aa} -f tsv -o {output.interpro}
 		'''
 
-rule interproscan_gff:
-        input:
-                augustus_aa = 'augustus/{sample}.augustus.aa'
-        output:
-                interpro = 'interproscan/gff/{sample}.augustus.aa.gff3'
-        shell:
-                '''
-                ../interproscan-5.65-97.0/interproscan.sh -i {input.augustus_aa} -f gff3 -o {output.interpro}
-                '''
+#rule interproscan_gff:
+#        input:
+#                augustus_aa = 'augustus/{sample}.augustus.aa'
+#        output:
+#                interpro = 'interproscan/gff/{sample}.augustus.aa.gff3'
+#        shell:
+#                '''
+#                ../interproscan-5.65-97.0/interproscan.sh -i {input.augustus_aa} -f gff3 -o {output.interpro}
+#                '''
 
 rule interpro_filter1:
 	input:
@@ -165,33 +145,51 @@ rule interpro_filter1:
 		done		
 		'''
 
-rule interpro_filter2:
+rule interpro_filter_aa:
         input:
                 fasta = 'augustus/{sample}.augustus.aa',
                 txt = 'Genes/{sample}.truep450.txt'
         output:
-                'Genes/{sample}.filtered.fa'
+                'Genes/{sample}.filtered.aa'
+        shell:
+                'bash Scripts/Interpro_filter_smk.sh {input.fasta} {input.txt} {output}'
+
+rule interpro_filter_nt:
+        input:
+                fasta = 'augustus/{sample}.augustus.nt',
+                txt = 'Genes/{sample}.truep450.txt'
+        output:
+                'Genes/{sample}.filtered.nt'
         shell:
                 'bash Scripts/Interpro_filter_smk.sh {input.fasta} {input.txt} {output}'
 
 rule reformat_combine:
 	input:
-		genes = 'Genes/{sample}.filtered.fa'
+		genes = 'Genes/{sample}.filtered.aa'
 	output:
-		reformat = 'Genes/{sample}.filtered.reformat.fa'
+		reformat = 'Genes/{sample}.filtered.reformat.aa'
 	shell:
 		'''
 		for file in {input.genes}; do
-			filename=$(basename "$file" .filtered.fa)
+			filename=$(basename "$file" .filtered.aa)
 
 			sed "s/t1/$filename/g" {input.genes} > {output.reformat}
 
                done
 
 		'''
+
+rule cdhit:
+	input:
+		genes = 'Genes/{sample}.filtered.reformat.aa'
+	output:
+		'Genes/{sample}.cdhit.aa'
+	shell:
+		'cd-hit -i {input.genes} -c 1.00 -S 1 -o {output}'
+
 rule mafft:
 	input:
-		genes = 'Genes/{sample}.filtered.reformat.fa'
+		genes = 'Genes/{sample}.cdhit.aa'
 	output:
 		aligned = 'Mafft/{sample}.mafft.fa'
 	shell:
