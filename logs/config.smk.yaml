@@ -4,3 +4,6 @@ Run:
 
 Scripts:
   getAnnoFasta: "/home/STUDENTI/michele.albertini/Polyneoptera-P450/Scripts/getAnnoFasta.pl"
+
+Files:
+  Blast_Database: "/home/STUDENTI/michele.albertini/Polyneoptera-P450/BLAST-id/P450.db"

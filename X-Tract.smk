@@ -1,5 +1,6 @@
 configfile: 'logs/config.smk.yaml'
 exp=config['Run']['Expansion']
+blast_db=config['Files']['Blast_Database']
 
 getAnnoFasta=config['Scripts']['getAnnoFasta']
 
@@ -24,9 +25,13 @@ rule all:
 		expand('Genes/{sample}.filtered.nt', sample = sample),
 		expand('Genes/{sample}.truep450.txt', sample = sample),
 		expand('Genes/{sample}.filtered.reformat.aa', sample = sample),
-		expand('Genes/{sample}.cdhit.aa', sample = sample),
-#		expand('Mafft/{sample}.mafft.fa', sample = sample),
-				
+		expand('Genes/{sample}.cdhit.nt', sample = sample),
+		expand('Mafft/{sample}.mafft.fa', sample = sample),
+		expand('BLAST-id/results/{sample}.blast.txt', sample = sample),
+		expand('BLAST-id/results/{sample}.best_hit.txt', sample = sample),
+		expand('BLAST-id/results/{sample}.table', sample = sample)
+
+
 rule miniprot:
         input:
                 genome = 'Genomes/{sample}.fna',
@@ -181,9 +186,9 @@ rule reformat_combine:
 
 rule cdhit:
 	input:
-		genes = 'Genes/{sample}.filtered.reformat.aa'
+		genes = 'Genes/{sample}.filtered.reformat.nt'
 	output:
-		'Genes/{sample}.cdhit.aa'
+		'Genes/{sample}.cdhit.nt'
 	shell:
 		'cd-hit -i {input.genes} -c 1.00 -S 1 -o {output}'
 
@@ -194,3 +199,12 @@ rule mafft:
 		aligned = 'Mafft/{sample}.mafft.fa'
 	shell:
 		'mafft --dash {input.genes} > {output.aligned}'
+
+rule blast_id:
+	input:
+		genes = 'Genes/{sample}.cdhit.aa'
+	output:
+		'BLAST-id/results/{sample}.blast.txt'
+	shell:
+		'blastp -query {input.genes} -db {blast_db} -outfmt 6 -out {output}'
+
