@@ -18,18 +18,15 @@ rule all:
 		expand('augustus/{sample}.augustus.gff', sample = sample),
 		expand('augustus/{sample}.augustus.aa', sample = sample),
 		expand('augustus/{sample}.augustus.codingseq', sample = sample),
-		expand('augustus/{sample}.augustus.nt', sample = sample),
 		expand('interproscan/tsv/{sample}.augustus.aa.tsv', sample = sample),
 #		expand('interproscan/gff/{sample}.augustus.aa.gff3', sample = sample),
 		expand('Genes/{sample}.filtered.aa', sample = sample),
-		expand('Genes/{sample}.filtered.nt', sample = sample),
+#		expand('Genes/{sample}.filtered.nt', sample = sample),
 		expand('Genes/{sample}.truep450.txt', sample = sample),
 		expand('Genes/{sample}.filtered.reformat.aa', sample = sample),
-		expand('Genes/{sample}.cdhit.nt', sample = sample),
-		expand('Mafft/{sample}.mafft.fa', sample = sample),
-		expand('BLAST-id/results/{sample}.blast.txt', sample = sample),
-		expand('BLAST-id/results/{sample}.best_hit.txt', sample = sample),
-		expand('BLAST-id/results/{sample}.table', sample = sample)
+		expand('Genes/{sample}.cdhit.aa', sample = sample),
+#		expand('Mafft/{sample}.mafft.fa', sample = sample),
+#		expand('BLAST-id/results/{sample}.blast.txt', sample = sample),
 
 
 rule miniprot:
@@ -186,9 +183,9 @@ rule reformat_combine:
 
 rule cdhit:
 	input:
-		genes = 'Genes/{sample}.filtered.reformat.nt'
+		genes = 'Genes/{sample}.filtered.reformat.aa'
 	output:
-		'Genes/{sample}.cdhit.nt'
+		'Genes/{sample}.cdhit.aa'
 	shell:
 		'cd-hit -i {input.genes} -c 1.00 -S 1 -o {output}'
 
