@@ -1,0 +1,6 @@
+[FAMILIES]
+- P450
+starting_gene_tree = /home/STUDENTI/michele.albertini/Polyneoptera-P450/Tree/GeneRax/P450.trimal.aa.raxml.bestTree
+alignment = /home/STUDENTI/michele.albertini/Polyneoptera-P450/Tree/GeneRax/P450.trimal.aa
+mapping = /home/STUDENTI/michele.albertini/Polyneoptera-P450/Tree/GeneRax/Mapping_genes.tsv 
+subst_model = /home/STUDENTI/michele.albertini/Polyneoptera-P450/Tree/GeneRax/P450.trimal.aa.raxml.bestModel

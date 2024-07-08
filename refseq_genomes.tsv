@@ -1,66 +1,44 @@
-#Termitoidea
-GCA_021186555.1	Rspe	Reticulitermes speratus
-GCA_013340265.1	Cfor	Coptotermes formosanus
-GCF_000696155.1	Znev	Zootermopsis nevadensis
-GCF_002891405.2	Csec	Cryptotermes secundus
-#Blattodea
-GCA_025594305.2	Pame	Periplaneta americana
-GCA_030220185.1	Dpun	Diploptera punctata
-#Mantodea
-GCA_030762935.1	Hcor	Hymenopus coronatus
-GCA_030765045.1	Tsin	Tenodera sinensis
-GCA_030765055.1 Mrel	Mantis religiosa
-GCA_030765065.1	Dtru	Deroplatys truncata
-GCA_030762175.1	Mvio	Metallyticus violacea
-#Phasmatodea
-GCA_032445375.1	Bros	Bacillus rossius
-GCA_029891345.1	Daus	Dryococelus australis
-GCA_002926335.1	Tcri	Timema cristinae
-GCA_002778355.1	Choo	Clitarchus hookeri
-#Orthoptera
-GCA_026315105.1 Lmig	Locusta migratoria
-GCF_023897955.1 Sgre	Schistocerca gregaria
-GCA_946902985.2	Mtha	Meconema thalassinum
-GCA_031002005.1	Vvia	Vandiemenella viatica
-GCA_017312745.1	Gbim	Gryllus bimaculatus
-GCA_031308135.1	Adom	Acheta domesticus
-GCA_900249655.1	Xbra	Xenocatantops brachycerus	ctg
-GCA_002313205.1	Lkoh	Laupala kohalensis
-GCA_011170035.1	Tocc	Teleogryllus occipitalis
-GCA_034510155.1 Eocu	Eucriotettix oculatus
-GCA_037074705.1	Ztra	Zhengitettix transpicula
-#Plecoptera
-GCA_907164805.1	Bput	Brachyptera putata
-GCA_921293315.2	Npic	Nemurella pictetii
-GCA_947568835.1	Pmon	Protonemura montana
-GCA_921293005.1 Ndub	Nemoura dubitans
-GCA_945910005.1 Igra	Isoperla grammatica
-GCA_934045905.1 Lnig	Leuctra nigra
-GCA_024449915.1 Scol	Sweltsa coloradensis	ctg
-#Dermaptera
-GCA_963082975.1	Lmin	Labia minor
-GCA_024734495.1 Faur	Forficula auricularia
-GCA_023213315.1	Eann	Euborellia annulipes
-GCA_010014785.2	Amar	Anisolabis maritima
-#Odonata
-GCF_921293095.1	Iele	Ischnura elegans
-GCA_947579665.1	Sstr	Sympetrum striolatum
-#Ephemeroptera
-GCA_949825025.1	Salt	Siphlonurus alternatus
-GCA_949318235.1	Etor	Ecdyonurus torrentis
-#Hemiptera
-GCF_005508785.2	Apis	Acyrthosiphon pisum
-GCF_021130785.1	Hvit	Homalodisca vitripennis
-#Psocoptera
-GCA_963971405.1	Pgib	Psococerastis gibbosa
-#Thysanoptera
-GCA_033675135.1	Fint	Frankliniella intonsa
-#Others
-GCF_023701775.1	Harm	Helicoverpa armigera
-GCF_023101765.2	Sfur	Spodoptera frugiperda
-GCF_020184175.1	Agos	Aphis gossypii
-GCF_000475195.1	Dcit	Diaphorina citri
-GCF_014356525.2	Nlug	Nilaparvata lugens
-GCF_000500325.1	Ldec	Leptinotarsa decemlineata
-GCF_000002335.3	Tcas	Tribolium castaneum
-GCF_000001215.4	Dmel	Drosophila melanogaster
+GCA_021186555.1	Rspe	Reticulitermes_speratus	Termitoidea
+GCA_013340265.1	Cfor	Coptotermes_formosanus	Termitoidea
+GCF_000696155.1	Znev	Zootermopsis_nevadensis	Termitoidea
+GCF_002891405.2	Csec	Cryptotermes_secundus	Termitoidea
+GCA_025594305.2	Pame	Periplaneta_americana	Blattodea
+GCA_030220185.1	Dpun	Diploptera_punctata	Blattodea
+GCA_030762935.1	Hcor	Hymenopus_coronatus	Mantodea
+GCA_030765045.1	Tsin	Tenodera_sinensis	Mantodea
+GCA_030765055.1	Mrel	Mantis_religiosa	Mantodea
+GCA_030765065.1	Dtru	Deroplatys_truncata	Mantodea
+GCA_030762175.1	Mvio	Metallyticus_violacea	Mantodea
+GCA_032445375.1	Bros	Bacillus_rossius	Phasmatodea
+GCA_029891345.1	Daus	Dryococelus_australis	Phasmatodea
+GCA_002926335.1	Tcri	Timema_cristinae	Phasmatodea
+GCA_002778355.1	Choo	Clitarchus_hookeri	Phasmatodea
+GCA_026315105.1	Lmig	Locusta_migratoria	Orthoptera
+GCF_023897955.1	Sgre	Schistocerca_gregaria	Orthoptera
+GCA_946902985.2	Mtha	Meconema_thalassinum	Orthoptera
+GCA_031002005.1	Vvia	Vandiemenella_viatica	Orthoptera
+GCA_017312745.1	Gbim	Gryllus_bimaculatus	Orthoptera
+GCA_031308135.1	Adom	Acheta_domesticus	Orthoptera
+GCA_900249655.1	Xbra	Xenocatantops_brachycerus	Orthoptera
+GCA_002313205.1	Lkoh	Laupala_kohalensis	Orthoptera
+GCA_011170035.1	Tocc	Teleogryllus_occipitalis	Orthoptera
+GCA_034510155.1	Eocu	Eucriotettix_oculatus	Orthoptera
+GCA_037074705.1	Ztra	Zhengitettix_transpicula	Orthoptera
+GCA_907164805.1	Bput	Brachyptera_putata	Plecoptera
+GCA_921293315.2	Npic	Nemurella_pictetii	Plecoptera
+GCA_947568835.1	Pmon	Protonemura_montana	Plecoptera
+GCA_921293005.1	Ndub	Nemoura_dubitans	Plecoptera
+GCA_945910005.1	Igra	Isoperla_grammatica	Plecoptera
+GCA_934045905.1	Lnig	Leuctra_nigra	Plecoptera
+GCA_024449915.1	Scol	Sweltsa_coloradensis	Plecoptera
+GCA_024734495.1	Faur	Forficula_auricularia	Dermaptera
+GCA_023213315.1	Eann	Euborellia_annulipes	Dermaptera
+GCA_010014785.2	Amar	Anisolabis_maritima	Dermaptera
+GCF_921293095.1	Iele	Ischnura_elegans	Odonata
+GCA_947579665.1	Sstr	Sympetrum_striolatum	Odonata
+GCA_949825025.1	Salt	Siphlonurus_alternatus	Ephemeroptera
+GCA_949318235.1	Etor	Ecdyonurus_torrentis	Ephemeroptera
+GCF_005508785.2	Apis	Acyrthosiphon_pisum	Hemiptera
+GCF_021130785.1	Hvit	Homalodisca_vitripennis	Hemiptera
+GCA_963971405.1	Pgib	Psococerastis_gibbosa	Psocoptera
+GCA_033675135.1	Fint	Frankliniella_intonsa	Thysanoptera
