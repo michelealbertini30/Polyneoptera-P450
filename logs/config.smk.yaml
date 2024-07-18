@@ -1,6 +1,6 @@
 Run:
-  Threads: 6
-  Expansion: 8000
+  Threads: 10
+  Expansion: 2000
 
 Scripts:
   getAnnoFasta: "/home/STUDENTI/michele.albertini/Polyneoptera-P450/Scripts/getAnnoFasta.pl"
