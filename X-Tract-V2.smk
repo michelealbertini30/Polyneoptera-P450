@@ -15,10 +15,10 @@ rule all:
 		expand('augustus/{sample}.augustus.codingseq', sample = sample),
 		expand('interproscan/tsv/{sample}.augustus.aa.tsv', sample = sample),
 #		expand('interproscan/gff/{sample}.augustus.aa.gff3', sample = sample),
-#		expand('Genes/{sample}.filtered.fa', sample = sample),
-#		expand('Genes/{sample}.truep450.txt', sample = sample),
-#		expand('Genes/{sample}.filtered.reformat.fa', sample = sample),
-#		expand('Genes/{sample}.cdhit.fa', sample = sample),
+		expand('Genes/{sample}.filtered.fa', sample = sample),
+		expand('Genes/{sample}.trueP450.txt', sample = sample),
+		expand('Genes/{sample}.filtered.reformat.fa', sample = sample),
+		expand('Genes/{sample}.cdhit.fa', sample = sample),
 #		expand('Mafft/{sample}.mafft.fa', sample = sample),
 
 rule miniprot:
@@ -82,16 +82,16 @@ rule interproscan_gff:
 
 rule interpro_filter1:
 	input:
-		interpro = 'interproscan/tsv/{sample}.augustus.aa.tsv'
+		'interproscan/tsv/{sample}.augustus.aa.tsv'
 	output:
-		trueABI = 'Genes/{sample}.trueP450.txt'
+		'Genes/{sample}.trueP450.txt'
 	shell:
 		'''
-		for file in {input.interpro}; do
+		for file in {input}; do
 			if [ -e "$file" ]; then
 
 				result=$(awk '/P450 |CYP / {{print $1}}' "$file" | sort -u)
-				echo -e "$result" > {output.trueP450}
+				echo -e "$result" > {output}
 
 			fi
 		done		

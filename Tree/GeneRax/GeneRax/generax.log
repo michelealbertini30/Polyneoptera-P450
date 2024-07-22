@@ -1,0 +1,76 @@
+GeneRax was called as follow:
+/home/STUDENTI/michele.albertini/GeneRax/build/bin/generax --families P450.family --species-tree species_tree_polyneoptera.treefile --rec-model UndatedDL --strategy SPR 
+
+General information:
+- Output prefix: GeneRax
+- Families information: P450.family
+- Species tree: species_tree_polyneoptera.treefile
+- MPI Ranks: 10
+- Random seed: 123
+- Reconciliation model: UndatedDL
+- DTL rates: global rates
+- Infer ML reconciliation: ON
+- Unrooted reconciliation likelihood: OFF
+- Enforcing gene tree root: OFF
+- Prune species tree mode: OFF
+
+Gene tree correction information:
+- Gene tree search strategy: SPR
+- Max gene SPR radius: 5
+
+[00:00:00] Filtering invalid families...
+
+End of instance initialization
+[00:00:00] Starting species tree initialization...
+[00:00:00] End of species tree initialization
+[00:00:00] Filtering invalid families based on the starting species tree...
+
+[00:00:00] Gathering statistics about the families...
+[00:00:00] Input data information:
+- Number of gene families: 1
+- Number of species: 44
+- Total number of genes: 1276
+- Average number of genes per family: 1276
+- Maximum number of genes per family: 1276
+- Species covered with the smallest family coverage: "Cfor" (covered by 1/1 families)
+- Average (over species) species family coverage: 1
+
+[00:00:00] Reconciliation rates optimization... 
+	D=0.476939, L=0.9771, RecLL= -5130.29
+
+[00:00:06] Optimizing gene trees with radius=1... 
+[04:57:09] JointLL=-342239 RecLL=-4239.93 LibpllLL=-337999
+
+[04:57:09] Reconciliation rates optimization... 
+	D=0.310241, L=0.619504, RecLL= -4179.77
+
+[04:57:16] Optimizing gene trees with radius=2... 
+[35:57:41] JointLL=-341950 RecLL=-3891.1 LibpllLL=-338059
+
+[35:57:41] Reconciliation rates optimization... 
+	D=0.266572, L=0.479328, RecLL= -3907.34
+
+[35:58:12] Optimizing gene trees with radius=3... 
+[110:02:02] JointLL=-341878 RecLL=-3778.68 LibpllLL=-338099
+
+[110:02:02] Reconciliation rates optimization... 
+	D=0.364772, L=0.66445, RecLL= -3786.03
+
+[110:02:05] Optimizing gene trees with radius=4... 
+[125:22:51] JointLL=-341843 RecLL=-3783.42 LibpllLL=-338060
+
+[125:22:51] Reconciliation rates optimization... 
+	D=0.307706, L=0.697254, RecLL= -3790.38
+
+[125:22:55] Optimizing gene trees with radius=5... 
+[145:37:35] JointLL=-341844 RecLL=-3800.35 LibpllLL=-338044
+
+[145:37:35] Reconciling gene trees with the species tree...
+[145:37:36] Terminating the instance..
+
+[145:37:36] DT rates: D=0.307706 L= 0.697254
+[145:37:36] Reconciliation likelihood: -3800.35
+[145:37:36] Phylogenetic likelihood: -338044
+[145:37:36] Joint likelihood: -341844
+[145:37:36] Results directory: GeneRax
+[145:37:36] End of GeneRax execution

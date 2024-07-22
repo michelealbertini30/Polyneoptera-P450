@@ -12,9 +12,9 @@ if [ ! -d "$input_dir" ]; then
 fi
 
 # Loop through all fasta files and generate its corresponding .txt file
-for input_fasta_file in "$input_dir"/*.aa; do
-	base_name=$(basename "$input_fasta_file" augustus.aa)
-	true_genes_file_name="${base_name}.truep450.txt"
+for input_fasta_file in "$input_dir"/*.ref; do
+	base_name=$(basename "$input_fasta_file" .faa.ref)
+	true_genes_file_name="${base_name}.trueP450.txt"
 
 	# Check for true genes file existence
 	if [ ! -f "$true_genes_file_name" ]; then

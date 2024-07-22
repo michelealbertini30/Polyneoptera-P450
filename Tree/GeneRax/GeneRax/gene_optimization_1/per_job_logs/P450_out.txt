@@ -1,0 +1,160 @@
+mpi-scheduler optimizeGeneTrees GeneRax/results/P450/geneTree.newick /home/STUDENTI/michele.albertini/Polyneoptera-P450/Tree/GeneRax/Mapping_genes.tsv /home/STUDENTI/michele.albertini/Polyneoptera-P450/Tree/GeneRax/P450.trimal.aa GeneRax/species_trees/inferred_species_tree.newick /home/STUDENTI/michele.albertini/Polyneoptera-P450/Tree/GeneRax/P450.trimal.aa.raxml.bestModel GeneRax/gene_optimization_1/dtl_rates.txt 0 0 1 UNIFORM 0 1 0 0 PARENTS 0 0 0.000001 NONE 0 2 -1 1 1 1 2 GeneRax/results/P450/geneTree.newick GeneRax/results/P450/stats.txt 0 GeneRax/gene_optimization_1/checkpoints/P450 
+[04:57:16] Starting optimizeGeneTreesSlave
+LibpllModel /home/STUDENTI/michele.albertini/Polyneoptera-P450/Tree/GeneRax/P450.trimal.aa.raxml.bestModel
+[04:57:16] Starting optimizing gene tree
+Number of ranks 9
+(0.310241, 0.619504, score = 0)
+Taxa number: 1276
+joint: -342114  libpll: -337934  reconciliation: -4179.78  
+Initial ll = -342114
+[05:00:00] SPR Search with radius 2: trying 3822 prune nodes
+[07:54:44] Found 90 potential better moves
+[07:54:44] 	GeneRax will now test and apply all the 90 potential good moves one after each other
+	Applying move, ll = -342113, 1356 1417
+	Applying move, ll = -342113, 1380 39
+	Applying move, ll = -342112, 1569 1558
+	Applying move, ll = -342110, 1649 1606
+	Applying move, ll = -342109, 1739 1669
+	Applying move, ll = -342108, 1742 1759
+	Applying move, ll = -342102, 1863 201
+	Applying move, ll = -342102, 2100 287
+	Applying move, ll = -342098, 2159 2215
+	Applying move, ll = -342096, 2226 2237
+	Applying move, ll = -342096, 2363 2369
+	Applying move, ll = -342090, 2367 374
+	Applying move, ll = -342089, 2426 2401
+	Applying move, ll = -342089, 2429 395
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Applying move, ll = -342089, 2653 2647
+	Applying move, ll = -342087, 2813 524
+	Applying move, ll = -342086, 2895 543
+	Worse likelihood, Move rejected
+	Applying move, ll = -342085, 2960 573
+	Applying move, ll = -342085, 3141 634
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Applying move, ll = -342080, 3242 3253
+	Applying move, ll = -342078, 3258 3244
+	Applying move, ll = -342077, 3267 669
+	Applying move, ll = -342073, 3468 3448
+	Applying move, ll = -342068, 3564 3568
+	Applying move, ll = -342067, 3614 3619
+	Worse likelihood, Move rejected
+	Applying move, ll = -342065, 3671 3514
+	Applying move, ll = -342065, 3863 3881
+	Applying move, ll = -342063, 3926 900
+	Applying move, ll = -342063, 4115 4117
+	Applying move, ll = -342060, 4233 1180
+	Applying move, ll = -342060, 4396 4363
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Applying move, ll = -342058, 4436 4426
+	Applying move, ll = -342056, 4458 4465
+	Applying move, ll = -342056, 4544 1099
+	Worse likelihood, Move rejected
+	Applying move, ll = -342055, 4712 4719
+	Applying move, ll = -342051, 4727 1159
+	Applying move, ll = -342048, 4914 4918
+	Worse likelihood, Move rejected
+	Applying move, ll = -342047, 5040 5002
+[08:00:02] SPR Search with radius 2: trying 3822 prune nodes
+[10:57:11] Found 84 potential better moves
+[10:57:11] 	GeneRax will now test and apply all the 84 potential good moves one after each other
+	Applying move, ll = -342045, 1352 1417
+	Applying move, ll = -342044, 1358 1355
+	Applying move, ll = -342042, 1383 1379
+	Applying move, ll = -342041, 1738 1654
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Applying move, ll = -342041, 2090 286
+	Applying move, ll = -342039, 2096 288
+	Applying move, ll = -342039, 2465 408
+	Applying move, ll = -342036, 2828 2846
+	Applying move, ll = -342035, 2879 2884
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Applying move, ll = -342031, 3242 661
+	Applying move, ll = -342031, 3293 3266
+	Applying move, ll = -342031, 3554 3571
+	Applying move, ll = -342030, 3584 3678
+	Applying move, ll = -342029, 3651 3613
+	Applying move, ll = -342023, 4169 973
+	Applying move, ll = -342022, 4191 4036
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Applying move, ll = -342022, 4226 3238
+	Worse likelihood, Move rejected
+	Applying move, ll = -342021, 4366 4357
+	Applying move, ll = -342019, 4385 4393
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Applying move, ll = -342015, 4785 1152
+	Applying move, ll = -342012, 4802 4232
+	Applying move, ll = -342009, 5003 5015
+	Applying move, ll = -342007, 5040 4996
+[11:01:59] SPR Search with radius 2: trying 3822 prune nodes
+[13:50:26] Found 37 potential better moves
+[13:50:26] 	GeneRax will now test and apply all the 37 potential good moves one after each other
+	Applying move, ll = -342004, 1356 1315
+	Applying move, ll = -342003, 1373 1386
+	Worse likelihood, Move rejected
+	Applying move, ll = -342001, 1421 0
+	Applying move, ll = -341998, 3239 3260
+	Applying move, ll = -341994, 3614 3610
+	Worse likelihood, Move rejected
+	Applying move, ll = -341990, 4163 4152
+	Applying move, ll = -341990, 4208 3295
+	Applying move, ll = -341985, 4226 659
+	Applying move, ll = -341984, 4367 1039
+	Worse likelihood, Move rejected
+	Applying move, ll = -341978, 4749 4780
+	Applying move, ll = -341971, 4997 1260
+[13:52:26] SPR Search with radius 2: trying 3822 prune nodes
+[16:34:27] Found 45 potential better moves
+[16:34:27] 	GeneRax will now test and apply all the 45 potential good moves one after each other
+	Applying move, ll = -341971, 2069 2152
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Applying move, ll = -341971, 3554 3550
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Applying move, ll = -341969, 4208 4204
+	Applying move, ll = -341965, 4358 4393
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Applying move, ll = -341965, 4618 4612
+	Worse likelihood, Move rejected
+	Applying move, ll = -341965, 4769 4794
+[16:37:34] SPR Search with radius 2: trying 3822 prune nodes
+[19:42:44] Found 20 potential better moves
+[19:42:44] 	GeneRax will now test and apply all the 20 potential good moves one after each other
+	Applying move, ll = -341963, 1421 1459
+	Applying move, ll = -341963, 2069 276
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Worse likelihood, Move rejected
+	Applying move, ll = -341963, 4615 4688
+	Applying move, ll = -341957, 4710 1153
+	Applying move, ll = -341955, 4768 4797
+[19:43:59] SPR Search with radius 2: trying 3822 prune nodes
+[23:18:20] Found 5 potential better moves
+[23:18:20] 	GeneRax will now test and apply all the 5 potential good moves one after each other
+	Applying move, ll = -341950, 1420 1450
+	Worse likelihood, Move rejected
+[23:18:46] SPR Search with radius 2: trying 3822 prune nodes
+[35:56:51] Found 0 potential better moves
+[35:56:51] 	GeneRax will now test and apply all the 0 potential good moves one after each other
+joint: -341950  libpll: -338059  reconciliation: -3891.1  
+Saving tree in GeneRax/results/P450/geneTree.newick
+Finished saving  GeneRax/results/P450/geneTree.newick
+[35:57:31] End of optimizing gene tree after 111615s
+[35:57:40] End of optimizeGeneTreesSlave
