@@ -2,12 +2,12 @@ g801.Adom	Uncharacterized
 g6536.Adom	Uncharacterized
 g1816.Adom	CYP4
 g1820.Adom	CYP4
-g1848.Adom	cytochrome_P450_monooxigenase_CYP4H10
+g1848.Adom	CYP4
 g1853.Adom	CYP4
 g1933.Adom	CYP4
 g1954.Adom	CYP4
 g195.Adom	CYP3
-g1965.Adom	cytochrome_P450_monooxigenase_CYP4H10
+g1965.Adom	CYP4
 g196.Adom	CYP2
 g83.Adom	CYP2
 g1979.Adom	CYP2
@@ -33,7 +33,7 @@ g2892.Adom	CYP3
 g287.Adom	CYP2
 g163.Adom	CYP2
 g2923.Adom	CYP4
-g2937.Adom	cytochrome_P450_monooxigenase_CYP4H10
+g2937.Adom	CYP4
 g3234.Adom	CYP4
 g3260.Adom	CYP4
 g3482.Adom	Uncharacterized
@@ -931,7 +931,7 @@ g1673.Hvit	CYP3
 g1694.Hvit	CYP3
 g1698.Hvit	CYP2
 g16.Hvit	CYP3
-g1704.Hvit	cytochrome_P450_CYP44
+g1704.Hvit	CYP44
 g1713.Hvit	CYP3
 g1731.Hvit	CYP3
 g1740.Hvit	CYP3
@@ -1317,7 +1317,7 @@ g2115.Lnig	CYP4
 g2152.Lnig	CYP3
 g2264.Lnig	CYP4
 g10053.Lnig	CYP3
-g2366.Lnig	cytochrome_P450_CYP44
+g2366.Lnig	CYP44
 g2372.Lnig	CYP4
 g2492.Lnig	CYP4
 g3428.Lnig	CYPM
@@ -1463,7 +1463,7 @@ g9957.Mtha	CYP4
 g10733.Mtha	CYP2
 g10791.Mtha	CYP2
 g10949.Mtha	CYP2
-g11070.Mtha	cytochrome_P450_CYP44
+g11070.Mtha	CYP44
 g11074.Mtha	CYP3
 g11435.Mtha	CYP4
 g11684.Mtha	CYP3
@@ -1732,7 +1732,7 @@ g164.Npic	CYP4
 g368.Npic	CYP4
 g3725.Npic	CYP4
 g3875.Npic	CYP3
-g3929.Npic	cytochrome_P450_CYP44
+g3929.Npic	CYP44
 g3942.Npic	CYP4
 g6092.Npic	CYP2
 g4025.Npic	Uncharacterized
@@ -1928,7 +1928,7 @@ g2866.Pgib	CYP3
 g2916.Pgib	CYP2
 g139.Pgib	CYP4
 g2945.Pgib	CYP4
-g2978.Pgib	cytochrome_P450_CYP44
+g2978.Pgib	CYP44
 g2984.Pgib	CYP4
 g3021.Pgib	Uncharacterized
 g299.Pgib	CYP4
@@ -1952,7 +1952,7 @@ g2520.Pmon	CYP2
 g2546.Pmon	CYPM
 g2571.Pmon	CYP4
 g344.Pmon	Uncharacterized
-g2581.Pmon	cytochrome_P450_monooxigenase_CYP4G7
+g2581.Pmon	CYP4
 g2692.Pmon	CYP3
 g2754.Pmon	CYP3
 g2774.Pmon	CYP4
@@ -1994,7 +1994,7 @@ g5292.Pmon	CYP4
 g5294.Pmon	CYP4
 g20.Pmon	CYP4
 g5312.Pmon	CYP4
-g5437.Pmon	cytochrome_P450_CYP44
+g5437.Pmon	CYP44
 g5472.Pmon	CYP2
 g5614.Pmon	CYP3
 g5717.Pmon	CYP3
@@ -2135,7 +2135,7 @@ g89.Salt	CYP4
 g9425.Salt	CYP4
 g1118.Salt	CYP2
 g1160.Salt	CYP2
-g1321.Salt	cytochrome_P450_CYP44
+g1321.Salt	CYP44
 g1456.Salt	CYP2
 g1148.Scol	Uncharacterized
 g2271.Scol	CYP3
@@ -2410,7 +2410,7 @@ g596.Tcas	CYP3
 g622.Tcas	CYP3
 g671.Tcas	CYP3
 g871.Tcas	CYP2
-g929.Tcas	cytochrome_P450_monooxigenase_CYP4H10
+g929.Tcas	CYP4
 g957.Tcas	CYPM
 g1143.Tcas	CYP4
 g10.Tcas	CYP4
